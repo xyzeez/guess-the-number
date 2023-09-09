@@ -15,7 +15,7 @@ const gameOverSound = new Audio('./asset/game-over.mp3');
 const playSound = (sound) => {
     sound.play();
 }
-let score = 20;
+let score = 3;
 let highscore = 0;
 let randomNumber = Math.trunc(Math.random() * 21);
 
@@ -36,10 +36,9 @@ const resetGame = () => {
 } 
 
 const checkScore = () => {
-    if (score < 1) {
+    if (score === 0) {
         displayMessage("🤦‍♂️ You Lost!");
-        playSound(gameOverSound);
-        resetGame();
+        setTimeout(resetGame, 1000);
     }
 }
 
@@ -64,8 +63,14 @@ checkBtn.addEventListener('click', () => {
     } else if (guessedNumber !== randomNumber) {
         score--;
         scoreBoard.textContent = score;
-        displayMessage(guessedNumber < randomNumber ? "↙️ too low!" : "↗️ too high!");
-        playSound(failureSound);
+        if (score > 0) {
+            displayMessage(guessedNumber < randomNumber ? "↙️ too low!" : "↗️ too high!");
+            playSound(failureSound);
+        } else if (score === 0) {
+            displayMessage("🤦‍♂️ You Lost!");
+            setTimeout(resetGame, 1000);
+            playSound(gameOverSound);
+        }
     }
 
 })
