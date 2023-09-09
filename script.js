@@ -8,6 +8,13 @@ const message = document.querySelector('.message');
 const scoreBoard = document.querySelector('.score');
 const highScoreBoard = document.querySelector('.highscore');
 
+const failureSound = new Audio('./asset/failure-drum-sound-effect.mp3');
+const successSound = new Audio('./asset/success-fanfare-trumpets.mp3');
+const gameOverSound = new Audio('./asset/game-over.mp3');
+
+const playSound = (sound) => {
+    sound.play();
+}
 let score = 20;
 let highscore = 0;
 let randomNumber = Math.trunc(Math.random() * 21);
@@ -31,6 +38,7 @@ const resetGame = () => {
 const checkScore = () => {
     if (score < 1) {
         displayMessage("🤦‍♂️ You Lost!");
+        playSound(gameOverSound);
         resetGame();
     }
 }
@@ -42,6 +50,7 @@ checkBtn.addEventListener('click', () => {
         displayMessage("😒 Follow the rules!");
     } else if (guessedNumber === randomNumber) {
         displayMessage("👍 Correct Number!");
+        playSound(successSound);
         number.textContent = randomNumber;
         score++;
         scoreBoard.textContent = score;
@@ -56,6 +65,7 @@ checkBtn.addEventListener('click', () => {
         score--;
         scoreBoard.textContent = score;
         displayMessage(guessedNumber < randomNumber ? "↙️ too low!" : "↗️ too high!");
+        playSound(failureSound);
     }
 
 })
