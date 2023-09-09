@@ -15,7 +15,7 @@ const gameOverSound = new Audio('./asset/game-over.mp3');
 const playSound = (sound) => {
     sound.play();
 }
-let score = 3;
+let score = 20;
 let highscore = 0;
 let randomNumber = Math.trunc(Math.random() * 21);
 
